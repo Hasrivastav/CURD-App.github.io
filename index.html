@@ -26,64 +26,71 @@
       </ul>
     </div>
     <script>
-        let Addbutton=document.getElementById('add_btn');
-        Addbutton.addEventListener("click", add);
-        let parentList =document.getElementById('parentList');
+        let add_btn=document.getElementById('add_btn');
+        add_btn.addEventListener("click", add_chapter);
+        let parentList=document.getElementById("parentList");
+        function add_chapter(e){
+               if(parentList.children[0].className =="empty_msg"){
+                parentList.children[0].remove();
+                
+               }
+               let currentBtn = e.currentTarget;
+                 let currentInput=currentBtn.previousElementSibling;
+                 let currentChapter=currentInput.value;
 
-        function add(e){
-            if(parentList.children[0].className =="emptyMsg")
-            {
-                parentList.children[0].remove()
-            }
-            let currentbtn=e.currentTarget;
-           let  currentInput=currentbtn.previousElementSibling
-          let currentChapter=currentInput.value;
-
-           let newLi=document.createElement('li');
-        //    newLi.classList.add('list-group-item');
-        newLi.className="list-group-item d-flex justify-content-between"
-        //newli.textContent=currentInput.value;
-        newLi.innerHTML = `<h3 class="flex-grow-1">${currentChapter}</h3> <button class="btn btn-danger mx-3  "  onclick="removeChap(this)">Remove</button>
-            <button class="btn btn-warning"  onclick="editChap(this)" >Edit</button>`
+                 let newli=document.createElement("li");
+                 newli.className ="list-group-item d-flex justify-content-between";
+                 newli.innerHTML=`<h3 class="flex-grow-1">${currentChapter}</h3>
+            <button class="btn btn-danger mx-3  " onclick="removeChap(this)">Remove</button>
+            <button class="btn btn-warning"  onclick="editChap(this)">Edit</button>`
+             
            
-        
-           parentList.appendChild(newLi)
- }
-        function removeChap(currElement){
-            currElement.parentElement.remove()
-            let parentList =document.getElementById('parentList');
-            if(parentList.children.length <= 0){
-            let newEmptymsg =document.createElement("h3")
-            newEmptymsg.classList.add("emptyMsg")
-            newEmptymsg.textContent ="Nothing is here. PLease  Add a chapter "
-            parentList.appendChild(newEmptymsg)
-        }
-        }
-        function editChap(currElement){
-            if(currElement.textContent=="Done"){
-                currElement.textContent="Edit"
-                let currentchapter=currElement.previousElementSibling.value
-                let currentHeading=document.createElement('h3');
-                currentHeading.className="flex-grow-1"
-                currentHeading.textContent=currentchapter
+            parentList.appendChild(newli);
+                
 
-                currElement.parentElement.replaceChild(currentHeading,currElement.previousElementSibling)
 
+
+        };
+
+         function removeChap(currentElement){
+
+            currentElement.parentElement.remove();
+            let parrentList=document.getElementById("parrentList");
+            if(parentList.children.length <=0)
+            {
+                let emptyMsg = document.createElement("h3");
+                emptyMsg.classList.add("empty_msg")
+                emptyMsg.innerHTML="Nothing is here,please add Something!!"
+                parentList.appendChild(emptyMsg);
             }
+
+         }
+
+         function editChap(currentElement){
+            if(currentElement.textContent=="Done"){
+                currentElement.textContent="Edit";
+          let currentChapName=currentElement.previousElementSibling.previousElementSibling.value;
+          let ChapInput=document.createElement('h3');
+                
+          ChapInput.className="flex-grow-1"
+          ChapInput.textContent=currentChapName
+          currentElement.parentElement.replaceChild(ChapInput, currentElement.previousElementSibling.previousElementSibling);
+
+        }
             else{
-                currentElement.textContent="Done"
-            let currentchapter=currentElement.previousElementSibling.textContent
-            let currentInput=document.createElement('input')
-            currentInput.type="text"
-            currentInput.className="form-control"
-            currentInput.placeholder="Chapter Name"
-            currentInput.value=currentchapter;
-            currElement.parentElement.replaceChild(currentInput,currentElement.previousElementSibling)
+            currentElement.textContent="Done";
+          let currentChapName=currentElement.previousElementSibling.previousElementSibling.textContent;
+           
+          let ChapInput=document.createElement('input');
+          ChapInput.type="text"
+          ChapInput.placeholder="chapter Name"        
+          ChapInput.className="form-control"
+          ChapInput.value=currentChapName
+          currentElement.parentElement.replaceChild(ChapInput, currentElement.previousElementSibling.previousElementSibling);
             }
 
-            
-            
-        }
+
+         }
 
      
 
